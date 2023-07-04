@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.ptut.kspenumcodelab.model.GenderType
+import com.ptut.kspenumcodelab.model.User
 import com.ptut.kspenumcodelab.ui.theme.KSPEnumCodelabTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,8 +33,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    val user = User()
+    val genderType = GenderType.fromInt(user.genderType)
     Text(
-        text = "Hello $name!",
+        text = "Hello $name is $genderType",
         modifier = modifier
     )
 }
