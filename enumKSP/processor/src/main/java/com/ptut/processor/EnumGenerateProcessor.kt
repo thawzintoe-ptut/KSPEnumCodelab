@@ -19,7 +19,7 @@ class EnumGenerateProcessor(private val codeGenerator: CodeGenerator) : SymbolPr
         val validatedSymbols = symbols.filter { it.validate() }.toList()
         validatedSymbols.forEach { symbol ->
             // TODO : step 11 -> create KSVisitorVoid to check Hierarchy
-            symbol.accept(visitor,Unit)
+            symbol.accept(visitor, Unit)
         }
         return symbols.toList() - validatedSymbols.toSet()
     }

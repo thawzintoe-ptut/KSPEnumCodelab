@@ -16,7 +16,7 @@ sourceSets.main {
 dependencies{
     // TODO: step 5 implement project module -> annotation
     // TODO: step 6 add KSP api dependency and Kotlin poet library
-    implementation(project(":enumKSP:annotation"))
+    implementation(project(":enumksp:annotation"))
     implementation(libs.squareup.ksp)
     implementation(libs.kotlinpoet)
 }
