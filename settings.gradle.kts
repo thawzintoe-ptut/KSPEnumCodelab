@@ -15,6 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "KSPEnumCodelab"
 include(":app")
-include(":enumKSP")
-include(":enumKSP:annotation")
-include(":enumKSP:processor")
+include(":enumksp")
+include(":enumksp:annotation")
+include(":enumksp:processor")

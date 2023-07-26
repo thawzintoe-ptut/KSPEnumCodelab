@@ -59,7 +59,7 @@ android {
 
 dependencies {
     // TODO step 28: implement annotation
-    implementation(project(":enumKSP:annotation"))
+    implementation(project(":enumksp:annotation"))
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -75,5 +75,5 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    ksp(project(":enumKSP:processor"))
+    ksp(project(":enumksp:processor"))
 }
