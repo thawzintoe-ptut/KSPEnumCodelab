@@ -17,6 +17,8 @@ dependencies{
     // TODO: step 5 implement project module -> annotation
     // TODO: step 6 add KSP api dependency and Kotlin poet library
     implementation(project(":enumksp:annotation"))
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.21-1.0.11")
+    implementation("com.squareup:kotlinpoet-ksp:1.12.0")
     implementation(libs.squareup.ksp)
     implementation(libs.kotlinpoet)
 }

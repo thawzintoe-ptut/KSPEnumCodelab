@@ -8,6 +8,6 @@ import com.google.devtools.ksp.processing.SymbolProcessorProvider
 class EnumGenerateProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         // TODO: step 8 create SymbolProcessor for Enum generate
-        return EnumGenerateProcessor(environment.codeGenerator)
+        return EnumGenerateProcessor(environment.logger,environment.codeGenerator)
     }
 }

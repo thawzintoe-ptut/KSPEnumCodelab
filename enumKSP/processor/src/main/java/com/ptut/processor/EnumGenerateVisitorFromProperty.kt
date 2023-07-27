@@ -1,11 +1,7 @@
 package com.ptut.processor
 
-import com.google.devtools.ksp.getDeclaredProperties
-import com.google.devtools.ksp.isAbstract
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.symbol.ClassKind
-import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSPropertyDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import com.squareup.kotlinpoet.ClassName
@@ -22,44 +18,16 @@ import java.util.Locale
  * type -> private val type: Int for Enum class
  * enumConstants -> parameter from "Enum" annotation to get how many enum constants for this
  */
-const val enumValueType = "type"
-const val enumConstants = "enumConstants"
 
-class EnumGenerateVisitor(
+class EnumGenerateVisitorFromProperty(
     private val logger: KSPLogger,
     private val codeGenerator: CodeGenerator,
 ) : KSVisitorVoid() {
-    // TODO step 14: create enumClass property field
-    private val enumClass = Enum::class.simpleName
-    override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-        // TODO step 12: create packageName and gerProperties from Class generation
-        // Get declare package name (com.ptut.kspenumcodelab.model)
-        val packageName = classDeclaration.packageName.asString()
-        if (classDeclaration.isAbstract()) {
-            logger.error(
-                "||Class Annotated with MyEvent should kotlin data class",
-                classDeclaration,
-            )
-        }
 
-        if (classDeclaration.classKind != ClassKind.CLASS) {
-            logger.error(
-                "||Class Annotated with Projections should kotlin data class",
-                classDeclaration,
-            )
-        }
-        // Get property field from declare Enum Annotation
-        val properties = classDeclaration.getDeclaredProperties()
-        properties.forEach { ksPropertyDeclaration ->
-            // ksPropertyDeclaration has only genderType variable
-            // TODO step 13: find shortname for property annotation "Enum" class
-            val enumAnnotation =
-                ksPropertyDeclaration.annotations.find { it.shortName.asString() == enumClass }
-            // check this ksPropertyDeclaration has Enum Annotation declaration
-            if (enumAnnotation != null) {
-                generateEnumClassForProperty(ksPropertyDeclaration, packageName)
-            }
-        }
+    private val enumClass = Enum::class.simpleName
+
+    override fun visitPropertyDeclaration(property: KSPropertyDeclaration, data: Unit) {
+        generateEnumClassForProperty(property, packageName = property.packageName.getShortName())
     }
 
     /**
@@ -120,21 +88,21 @@ class EnumGenerateVisitor(
                  *     public fun fromInt(type: Int): AgentType = values().first { it.type == type }
                  *   }
                  */
-//                addType(
-//                    TypeSpec.companionObjectBuilder()
-//                        .addFunction(
-//                            FunSpec.builder("fromInt")
-//                                .addParameter(enumValueType, Int::class)
-//                                .returns(enumClassName)
-//                                .addCode(
-//                                    """
-//                                        return values().first { it.$enumValueType == $enumValueType }
-//                                    """.trimIndent(),
-//                                )
-//                                .build(),
-//                        )
-//                        .build(),
-//                )
+                addType(
+                    TypeSpec.companionObjectBuilder()
+                        .addFunction(
+                            FunSpec.builder("fromInt")
+                                .addParameter(enumValueType, Int::class)
+                                .returns(enumClassName)
+                                .addCode(
+                                    """
+                                        return values().first { it.$enumValueType == $enumValueType }
+                                    """.trimIndent(),
+                                )
+                                .build(),
+                        )
+                        .build(),
+                )
             }
             .build()
 
