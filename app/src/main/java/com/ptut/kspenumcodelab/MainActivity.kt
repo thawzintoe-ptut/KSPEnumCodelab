@@ -32,10 +32,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    val user = User()
-    val genderType = user.genderType
     Text(
-        text = "Hello $name is $genderType",
+        text = "Hello $name is ",
         modifier = modifier
     )
 }
