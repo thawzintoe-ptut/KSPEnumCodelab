@@ -75,11 +75,12 @@ class EnumGenerateVisitorFromProperty(
             .apply {
                 // TODO step 22: create enum constant with All letters with uppercase
                 listArguments.forEachIndexed { index, value ->
+                    val enumConstantValueIndex = TypeSpec.anonymousClassBuilder()
+                        .addSuperclassConstructorParameter("%L", index)
+                        .build()
                     addEnumConstant(
                         value.toString().uppercase(),
-                        TypeSpec.anonymousClassBuilder()
-                            .addSuperclassConstructorParameter("%L", index)
-                            .build(),
+                        enumConstantValueIndex,
                     ).build()
                 }
                 /**
